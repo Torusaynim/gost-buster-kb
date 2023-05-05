@@ -217,7 +217,7 @@ function App(props) {
                     {loginData ? (
                         <div>
                             <h1>Browse Notes</h1>
-                            <Button variant="outlined" onClick={props.toggleTheme}>Toggle Theme</Button>
+                            <Button variant="contained" onClick={props.toggleTheme}>Toggle Theme</Button>
                             <h3>You've logged in as {loginData.email} (googleId - {loginData.googleId})</h3>
                             <Dialog open={openEdit} onClose={handleCloseEdit}>
                                 <DialogTitle>Edit Note</DialogTitle>
@@ -277,11 +277,11 @@ function App(props) {
                                 </DialogActions>
                             </Dialog>
                             <Input onNewNote={handleNewNote} />
-                            <Button variant="outlined" onClick={handleGetAllNotes}>Browse All Notes</Button>
+                            <Button variant="contained" onClick={handleGetAllNotes}>Browse All Notes</Button>
                             {/* {hasUserAccess('view_all') &&
                                 <Button disabled={!access} variant="outlined" onClick={handleGetAllNotes}>Get all notes</Button>
                             } */}
-                            <Button variant="outlined" onClick={handleGetUserNotes}>My Notes</Button>
+                            <Button variant="contained" onClick={handleGetUserNotes}>My Notes</Button>
                             {NotesList ? (
                                 <div>
                                 {hasUserAccess('view_all') &&
@@ -292,9 +292,7 @@ function App(props) {
                                 <div></div>
                             )}
                             <br /><br /><br />
-                            <button onClick={handleLogout} className="ggl-btn">
-                                <span style={{ fontWeight: 500, padding: "10px" }}>Logout</span>
-                            </button>
+                            <Button variant="contained" onClick={handleLogout}>Logout</Button>
                         </div>
                     ) : (
                         <div>

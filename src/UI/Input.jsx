@@ -29,7 +29,7 @@ export default function Inputs(props) {
 
                 <Input id='name' placeholder="Start New Project" inputProps={ariaLabel} required />
                 <Input id='sum' type="number" style={{ marginLeft: "1em" }} placeholder="Insert project sum" required />
-                <Button variant="outlined" style={{ marginLeft: "1em" }} type="submit">Create project</Button>
+                <Button variant="contained" style={{ marginLeft: "1em" }} type="submit">Create project</Button>
             </form>
 
         </Box>
