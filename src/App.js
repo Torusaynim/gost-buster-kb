@@ -1,9 +1,8 @@
 import './App.css';
-import { useState } from 'react';
 import Input from './UI/Input'
 import Button from '@mui/material/Button';
 import Table from './UI/Table';
-import React from 'react';
+import React, { useState } from 'react';
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
@@ -13,7 +12,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 
 
-function App() {
+function App(props) {
     const [openEdit, setOpenEdit] = useState(false);
     const [openSupport, setOpenSupport] = useState(false);
     const [noteId, setNoteId] = useState(null);
@@ -217,7 +216,8 @@ function App() {
                 <div>
                     {loginData ? (
                         <div>
-                            <h1>Kickstart Your Notes</h1>
+                            <h1>Browse Notes</h1>
+                            <Button variant="outlined" onClick={props.toggleTheme}>Toggle Theme</Button>
                             <h3>You've logged in as {loginData.email} (googleId - {loginData.googleId})</h3>
                             <Dialog open={openEdit} onClose={handleCloseEdit}>
                                 <DialogTitle>Edit Note</DialogTitle>
