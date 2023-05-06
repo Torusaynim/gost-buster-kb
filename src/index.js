@@ -1,9 +1,10 @@
+import './index.css';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter } from "react-router-dom";
+import App from './App';
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import App from './App';
 import { blue, lightBlue, red, green, amber, deepOrange, grey } from '@mui/material/colors';
 
 
@@ -73,8 +74,10 @@ const AppWrapper = () => {
 
     return (
     <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <CssBaseline />
+      <BrowserRouter>
         <App toggleTheme={toggleTheme} />
+      </BrowserRouter>
     </ThemeProvider>
     );
 };
