@@ -12,6 +12,9 @@ import { GoogleLogin } from '@react-oauth/google';
 
 
 function Home(props) {
+    
+    const backUri = 'http://127.0.0.1:5000';
+    
     const [openEdit, setOpenEdit] = useState(false);
     const [openSupport, setOpenSupport] = useState(false);
     const [noteId, setNoteId] = useState(null);
@@ -19,8 +22,6 @@ function Home(props) {
     const [sumGET, setSum] = useState(0);
 
     const [access, setAccess] = useState(false);
-
-    const backUri = 'http://127.0.0.1:5000';
 
     const handleEditNote = async (noteId) => {
         console.log('handleEditNote')
@@ -83,6 +84,7 @@ function Home(props) {
         toggleNotes(false);
         localStorage.setItem('loginData', JSON.stringify(data));
     };
+
     const handleLogout = () => {
         localStorage.removeItem('loginData');
         setLoginData(null);
