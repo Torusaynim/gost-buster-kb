@@ -1,7 +1,7 @@
 import './App.css';
-import Input from './UI/Input'
+import Input from './components/Input'
 import Button from '@mui/material/Button';
-import Table from './UI/Table';
+import Table from './components/Table';
 import React, { useState } from 'react';
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
