@@ -186,20 +186,6 @@ function App(props) {
         setSum(e.target.value)
     };
 
-    // const getUser = async (userId) => {
-    //     const user_res = await fetch(backUri+'/api/get-user/' + userId)
-    //     const result = await user_res.json().then(data => {return data})
-    //     console.log(result)
-    //     return result
-    // }
-    //
-    // const getPermissions = async (role) => {
-    //     const res = await fetch(backUri+'/api/get-permissions/'+role)
-    //     const result = await res.json().then(data => {return data})
-    //     console.log(result)
-    //     return result
-    // }
-
     const hasUserAccess = async (perm) => {
         const res = await fetch(backUri+'/api/get-user-permissions/' + loginData.googleId)
         const result = await res.json()
