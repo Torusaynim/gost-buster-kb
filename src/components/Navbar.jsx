@@ -41,10 +41,10 @@ function DrawerAppBar(props) {
         <Typography 
           component={Link} 
           to={'/'} 
-          variant="h6" 
+          variant="h6"
           sx={{ my: 2, textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
-            <img src={Logo} alt="логотип" style={{ width: '50%' }} />
+            <img src={Logo} alt="логотип" />
             База знаний ГОСТ
         </Typography>
       </div>
@@ -120,14 +120,15 @@ function DrawerAppBar(props) {
           </IconButton>
           <Typography
             variant="h6"
+            noWrap
             component={Link}
             to={'/'}
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' }, textDecoration: 'none', color: 'inherit', alignItems: 'center' }}
+            sx={{ display: { xs: 'none', sm: 'flex' }, textDecoration: 'none', color: 'inherit', alignItems: 'center' }}
           >
             <img src={Logo} alt="логотип" style={{ marginRight: '16px' }} />
             База знаний в области ГОСТ
           </Typography>
-          <Search>
+          <Search sx={{ flexGrow: 1 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>

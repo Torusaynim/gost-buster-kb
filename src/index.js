@@ -17,8 +17,8 @@ const getDesignTokens = (mode) => ({
             primary: blue,
             divider: grey[50],
             background: {
-                default: grey[50],
-                paper: grey[300],
+              default: grey[50],
+              paper: grey[300],
             },
             text: {
               primary: grey[900],
@@ -42,7 +42,7 @@ const getDesignTokens = (mode) => ({
     breakpoints: {
       values: {
         xs: 0,   // Modify the value for 'xs' breakpoint
-        sm: 1050, // Modify the value for 'sm' breakpoint
+        sm: 1230, // Modify the value for 'sm' breakpoint
       },
     },
 });
