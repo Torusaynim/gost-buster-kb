@@ -258,8 +258,8 @@ function Home(props) {
                                 </form>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleCloseSupport}>Cancel</Button>
-                                <Button onClick={handleSupport}>Support</Button>
+                                <Button onClick={handleCloseSupport}>Отмена</Button>
+                                <Button onClick={handleSupport}>Поддержать</Button>
                             </DialogActions>
                         </Dialog>
                         <Input onNewNote={handleNewNote} />

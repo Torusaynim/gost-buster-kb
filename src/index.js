@@ -39,6 +39,12 @@ const getDesignTokens = (mode) => ({
             },
           }),
     },
+    breakpoints: {
+      values: {
+        xs: 0,   // Modify the value for 'xs' breakpoint
+        sm: 1050, // Modify the value for 'sm' breakpoint
+      },
+    },
 });
 
 const AppWrapper = () => {
