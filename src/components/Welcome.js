@@ -45,16 +45,18 @@ function Welcome(props) {
     };
 
     return (
-        <div className="App">
-            <div>
-                <h1>База Знаний в области ГОСТ на разработку в области Информационных Технологий</h1>
-                <Button variant="contained" onClick={props.toggleTheme}>Toggle Theme</Button>
-                <div><GoogleLogin
-                    onSuccess={handleLogin}
-                    onError={() => {
-                        console.log('Login Failed');
-                    }}
-                /></div>
+        <div>
+            <div className="App" style={{position: "relative"}}>
+                <div>
+                    <h1>База Знаний в области ГОСТ на разработку в области Информационных Технологий</h1>
+                    <Button variant="contained" onClick={props.toggleTheme}>Сменить тему</Button>
+                    <div><GoogleLogin
+                        onSuccess={handleLogin}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                    /></div>
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import './App.css';
 import React from 'react';
+import Navbar from './components/Navbar';
 import Welcome from './components/Welcome';
 import Home from './components/Home';
 import {Routes, Route } from "react-router-dom";
@@ -10,6 +11,7 @@ function App(props) {
 
     return (
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+            <Navbar toggleTheme={props.toggleTheme} />
             <Routes>
                 {/* <Route exact path="/path" element={<ComponentName/>} /> */}
                 <Route exact path="/" element={<Welcome toggleTheme={props.toggleTheme} />} />

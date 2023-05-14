@@ -202,11 +202,11 @@ function Home(props) {
             <div>
                 {loginData ? (
                     <div>
-                        <h1>Browse Notes</h1>
-                        <Button variant="contained" onClick={props.toggleTheme}>Toggle Theme</Button>
-                        <h3>You've logged in as {loginData.email} (googleId - {loginData.googleId})</h3>
+                        <h1>Просмотр записей</h1>
+                        <Button variant="contained" onClick={props.toggleTheme}>Сменить тему</Button>
+                        <h3>Авторизованный пользователь {loginData.email} (googleId - {loginData.googleId})</h3>
                         <Dialog open={openEdit} onClose={handleCloseEdit}>
-                            <DialogTitle>Edit Note</DialogTitle>
+                            <DialogTitle>Изменить</DialogTitle>
                         
                             <DialogContent>
                                 <form>
@@ -234,13 +234,13 @@ function Home(props) {
                                 </form>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleCloseEdit}>Cancel</Button>
-                                <Button onClick={handleEdit}>Edit</Button>
+                                <Button onClick={handleCloseEdit}>Отмена</Button>
+                                <Button onClick={handleEdit}>Изменить</Button>
                             </DialogActions>
                         </Dialog>
 
                         <Dialog open={openSupport} onClose={handleCloseSupport}>
-                            <DialogTitle>Support Note</DialogTitle>
+                            <DialogTitle>Поддержать</DialogTitle>
                         
                             <DialogContent>
                                 <form>
@@ -263,11 +263,11 @@ function Home(props) {
                             </DialogActions>
                         </Dialog>
                         <Input onNewNote={handleNewNote} />
-                        <Button variant="contained" onClick={handleGetAllNotes}>Browse All Notes</Button>
+                        <Button variant="contained" onClick={handleGetAllNotes}>Все записи</Button>
                         {/* {hasUserAccess('view_all') &&
                             <Button disabled={!access} variant="outlined" onClick={handleGetAllNotes}>Get all notes</Button>
                         } */}
-                        <Button variant="contained" onClick={handleGetUserNotes}>My Notes</Button>
+                        <Button variant="contained" onClick={handleGetUserNotes}>Мои записи</Button>
                         {NotesList ? (
                             <div>
                             {hasUserAccess('view_all') &&
@@ -278,11 +278,11 @@ function Home(props) {
                             <div></div>
                         )}
                         <br /><br /><br />
-                        <Button variant="contained" onClick={handleLogout}>Logout</Button>
+                        <Button variant="contained" onClick={handleLogout}>Выйти</Button>
                     </div>
                 ) : (
                     <div>
-                        <h1>Login Page</h1>
+                        <h1>Для работы с системой необходима авторизация</h1>
                             <GoogleLogin
                                 onSuccess={handleLogin}
                                 onError={() => {
