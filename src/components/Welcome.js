@@ -49,7 +49,7 @@ function Welcome(props) {
             <div className="App" style={{position: "relative"}}>
                 <div>
                     <h1>База Знаний в области ГОСТ на разработку в области Информационных Технологий</h1>
-                    <Button variant="contained" onClick={props.toggleTheme}>Сменить тему</Button>
+                    <p>Для начала работы, пожалуйста, войдите в систему с помощью учётной записи Google</p>
                     <div><GoogleLogin
                         onSuccess={handleLogin}
                         onError={() => {
