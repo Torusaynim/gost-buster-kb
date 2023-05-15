@@ -13,12 +13,11 @@ function App(props) {
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
             <Navbar toggleTheme={props.toggleTheme} />
             <Routes>
-                {/* <Route exact path="/path" element={<ComponentName/>} /> */}
-                <Route exact path="/" element={<Welcome toggleTheme={props.toggleTheme} />} />
-                <Route exact path="/home" element={<Home toggleTheme={props.toggleTheme} />} />
-                <Route exact path="/about" element={<Home toggleTheme={props.toggleTheme} />} />
-                <Route exact path="/contacts" element={<Home toggleTheme={props.toggleTheme} />} />
-                <Route exact path="/note" element={<Home toggleTheme={props.toggleTheme} />} />
+                <Route exact path="/" element={<Welcome />} />
+                <Route exact path="/home" element={<Home />} />
+                <Route exact path="/about" element={<Home />} />
+                <Route exact path="/contacts" element={<Home />} />
+                <Route exact path="/note" element={<Home />} />
             </Routes>
         </GoogleOAuthProvider>
     );

@@ -133,6 +133,7 @@ function DrawerAppBar(props) {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              fullWidth={true}
               placeholder="Введите запрос…"
               inputProps={{ 'aria-label': 'search' }}
             />

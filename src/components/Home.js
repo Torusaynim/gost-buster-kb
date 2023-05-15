@@ -203,7 +203,6 @@ function Home(props) {
                 {loginData ? (
                     <div>
                         <h1>Просмотр записей</h1>
-                        <Button variant="contained" onClick={props.toggleTheme}>Сменить тему</Button>
                         <h3>Авторизованный пользователь {loginData.email} (googleId - {loginData.googleId})</h3>
                         <Dialog open={openEdit} onClose={handleCloseEdit}>
                             <DialogTitle>Изменить</DialogTitle>
