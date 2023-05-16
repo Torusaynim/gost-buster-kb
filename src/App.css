@@ -8,3 +8,7 @@
   align-items: center;
   /* color: rgb(255, 255, 255); */
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
