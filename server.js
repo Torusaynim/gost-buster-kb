@@ -1,11 +1,13 @@
 import express from 'express';
 import { OAuth2Client } from 'google-auth-library';
+import mongoSanitize from 'express-mongo-sanitize';
 import { updateUser, newNote, getAllNotes, getUserNotes, deleteNote, editNote, supportNote, getUserById, getPermissionsByRole, getUserPermissions } from './mongodb.js'
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
 const app = express();
 app.use(express.json());
+app.use(mongoSanitize());
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
