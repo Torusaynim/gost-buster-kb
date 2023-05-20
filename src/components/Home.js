@@ -8,10 +8,13 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
+import Avatar from '@mui/material/Avatar';
+import { useTheme } from '@mui/material/styles';
 import { GoogleLogin } from '@react-oauth/google';
 
 
 function Home(props) {
+    const theme = useTheme();
     
     const backUri = 'http://127.0.0.1:5000';
     
@@ -204,6 +207,11 @@ function Home(props) {
                     <div>
                         <h1>Просмотр записей</h1>
                         <h3>Авторизованный пользователь {loginData.email} (googleId - {loginData.googleId})</h3>
+                        <Avatar
+                            sx={{ bgcolor: theme.palette.background.paper }}
+                            alt={loginData.name}
+                            src="/broken-image.jpg"
+                        ></Avatar>
                         <Dialog open={openEdit} onClose={handleCloseEdit}>
                             <DialogTitle>Изменить</DialogTitle>
                         
