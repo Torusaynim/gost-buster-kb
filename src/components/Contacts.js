@@ -21,7 +21,7 @@ function Contacts(props) {
                 <Grid item xs={12} sm={4}>
                   <Box spacing={3}>
                     <Typography variant="body1" mb={3} align="justify">
-                    Есть над чем задуматься: тщательные исследования конкурентов освещают чрезвычайно интересные особенности картины в целом, однако конкретные выводы, разумеется, функционально разнесены на независимые элементы. Банальные, но неопровержимые выводы, а также элементы политического процесса и по сей день остаются уделом либералов, которые жаждут быть подвергнуты целой серии независимых исследований. Современные технологии достигли такого уровня, что понимание сути ресурсосберегающих технологий выявляет срочную потребность системы массового участия.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
                     </Typography>
                     <Typography component={'span'} variant="body1" mb={3} align="justify">
                       <Box display="flex" mb={1} alignItems="center">

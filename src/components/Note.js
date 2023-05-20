@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Typography from "@mui/material/Typography";
 import { Paper } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import NetworkGraph from './NetworkGraph';
 
 function Note(props) {
     const { id } = useParams();
@@ -36,15 +37,21 @@ function Note(props) {
         <Container maxWidth="sm">
           <Box sx={{ p: 2 }}>
             <Paper sx={{ p: 2 }} >
-              <h1>Запись {id}</h1>
               {note ? (
-                <Typography variant="body1" mb={3} align="justify">
-                    текст - {note.note}
-                </Typography>
+                <Container>
+                    <Typography variant="body1" mb={3} align="justify">
+                        <h1 align="center">{note.name}</h1>
+                        <p>Серия: {note.group}</p>
+                        <p>Статус: {note.status}</p>
+                        <p>Номер: {note.number}</p>
+                        <p>Теги: {note.tags.join(', ')}</p>
+                        <p>Ссылки: {note.links.join(', ')}</p>
+                        <p>Рекомендации: {note.note}</p>
+                    </Typography>
+                    <NetworkGraph noteId={id} />
+                </Container>
               ) : (
-                <Typography variant="body1" mb={3} align="justify">
-                    Загрузка... либо такой записи не существует
-                </Typography>
+                <h1>Загрузка... либо такой записи не существует</h1>
               )}
             </Paper>
           </Box>
