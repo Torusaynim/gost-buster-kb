@@ -1,7 +1,7 @@
 import express from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import mongoSanitize from 'express-mongo-sanitize';
-import { updateUser, newNote, getAllNotes, getUserNotes, deleteNote, editNote, supportNote, getUserById, getPermissionsByRole, getUserPermissions } from './mongodb.js'
+import { updateUser, newNote, getAllNotes, getNote, getUserNotes, deleteNote, editNote, supportNote, getUserById, getPermissionsByRole, getUserPermissions } from './mongodb.js'
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
@@ -45,6 +45,19 @@ app.get('/api/get-all-Notes', async (req, res) => {
     res.status(200);
     res.json(notes)
 });
+
+app.get('/api/get-Note/:id', async (req, res) => {
+    try {
+        const note = await getNote(req.params.id);
+        if (note) {
+          res.status(200).json(note);
+        } else {
+          res.status(404).json({ error: 'Note not found' });
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve note' });
+      }
+    });
 
 app.get('/api/get-user-Notes/:googleId', async (req, res) => {
     const userNotes = await getUserNotes(req.params.googleId)

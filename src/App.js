@@ -5,6 +5,7 @@ import Welcome from './components/Welcome';
 import Home from './components/Home';
 import About from './components/About';
 import Contacts from './components/Contacts';
+import Note from './components/Note';
 import {Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
@@ -19,7 +20,7 @@ function App(props) {
                 <Route exact path="/home" element={<Home />} />
                 <Route exact path="/about" element={<About />} />
                 <Route exact path="/contacts" element={<Contacts />} />
-                <Route path="/note/:id" element={<Home />} />
+                <Route path="/note/:id" element={<Note />} />
             </Routes>
         </GoogleOAuthProvider>
     );

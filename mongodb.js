@@ -37,6 +37,15 @@ const getAllNotes = async () => {
     return res
 }
 
+const getNote = async (_id) => {
+    try {
+        const res = await notes.findOne({ _id: ObjectId(_id) });
+        return res;
+    } catch (error) {
+        return null;
+    }
+}
+
 const getUserNotes = async (userId) => {
     const res = await notes.find({ author: userId }).toArray()
     return res
@@ -84,5 +93,5 @@ const getUserPermissions = async (userId) => {
 start()
 
 export {
-    updateUser, newNote, getAllNotes, getUserNotes, deleteNote, editNote, supportNote, getUserById, getPermissionsByRole, getUserPermissions
+    updateUser, newNote, getAllNotes, getNote, getUserNotes, deleteNote, editNote, supportNote, getUserById, getPermissionsByRole, getUserPermissions
 }
