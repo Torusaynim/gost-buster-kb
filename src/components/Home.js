@@ -206,12 +206,15 @@ function Home(props) {
                 {loginData ? (
                     <div>
                         <h1>Просмотр записей</h1>
-                        <h3>Авторизованный пользователь {loginData.email} (googleId - {loginData.googleId})</h3>
-                        <Avatar
-                            sx={{ bgcolor: theme.palette.background.paper }}
-                            alt={loginData.name}
-                            src="/broken-image.jpg"
-                        ></Avatar>
+                        <h3>Пользователь авторизован (googleId - {loginData.googleId})</h3>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                            <Avatar
+                                sx={{ bgcolor: theme.palette.background.paper }}
+                                alt={loginData.name}
+                                src="/broken-image.jpg"
+                            />
+                            <span style={{ marginLeft: '0.5em' }}>{loginData.email}</span>
+                        </div>
                         <Dialog open={openEdit} onClose={handleCloseEdit}>
                             <DialogTitle>Изменить</DialogTitle>
                         

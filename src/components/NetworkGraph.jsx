@@ -10,33 +10,15 @@ function NetworkGraph(props) {
 
     const data = {
       nodes: [
-        { id: 'Node 1' },
-        { id: 'Node 2' },
-        { id: 'Node 3' },
-        { id: 'Node 4' },
+        { id: 'Образец записи' },
+        { id: 'Пример связи 1' },
+        { id: 'Пример связи 2' },
       ],
       links: [
-        { source: 'Node 1', target: 'Node 2' },
-        { source: 'Node 2', target: 'Node 3' },
-        { source: 'Node 3', target: 'Node 4' },
-        { source: 'Node 4', target: 'Node 1' },
+        { source: 'Образец записи', target: 'Пример связи 1' },
+        { source: 'Образец записи', target: 'Пример связи 2' },
       ],
     };
-
-    const simulation = d3
-      .forceSimulation(data.nodes)
-      .force('link', d3.forceLink(data.links).id((d) => d.id))
-      .force('charge', d3.forceManyBody().strength(-1000))
-      .force('center', d3.forceCenter(200, 200).strength(0.05))
-      .on('tick', () => {
-        link
-          .attr('x1', (d) => d.source.x)
-          .attr('y1', (d) => d.source.y)
-          .attr('x2', (d) => d.target.x)
-          .attr('y2', (d) => d.target.y);
-
-        node.attr('cx', (d) => d.x).attr('cy', (d) => d.y);
-      });
 
     const drag = d3
       .drag()
@@ -56,25 +38,53 @@ function NetworkGraph(props) {
       });
 
     const link = svg
-      .selectAll('.link')
-      .data(data.links)
-      .enter()
-      .append('line')
-      .attr('class', 'link')
-      .style('stroke', 'gray')
-      .style('stroke-width', 2);
+    .selectAll('.link')
+    .data(data.links)
+    .enter()
+    .append('line')
+    .attr('class', 'link')
+    .style('stroke', 'gray')
+    .style('stroke-width', 2);
 
     const node = svg
-      .selectAll('.node')
-      .data(data.nodes)
-      .enter()
-      .append('circle')
-      .attr('class', 'node')
-      .attr('r', 10)
-      .style('fill', 'steelblue')
+    .selectAll('.node')
+    .data(data.nodes)
+    .enter()
+    .append('g') // Append a container group for each node
+    .attr('class', 'node')
+    .call(drag);
+    
+    node
+      .append('circle') // Append circle elements within the container group
+      .attr('r', (d, i) => (i === 0 ? 30 : 15))
+      .style('fill', 'orange')
       .style('stroke', 'white')
-      .style('stroke-width', 2)
-      .call(drag);
+      .style('stroke-width', 2);
+    
+    node
+      .append('text') // Append text elements within the container group
+      .text((d) => d.id) // Set the text content of the node
+      .attr('text-anchor', 'middle')
+      .attr('dy', '0.35em'); // Adjust the vertical alignment of the text
+    
+    const simulation = d3
+      .forceSimulation(data.nodes)
+      .force('link', d3.forceLink(data.links).id((d) => d.id).distance(100))
+      .force('charge', d3.forceManyBody().strength(-1000))
+      .force('center', d3.forceCenter(200, 200).strength(0.05))
+      .on('tick', () => {
+        link
+          .attr('x1', (d) => d.source.x)
+          .attr('y1', (d) => d.source.y)
+          .attr('x2', (d) => d.target.x)
+          .attr('y2', (d) => d.target.y);
+    
+        node.attr('transform', (d) => `translate(${d.x}, ${d.y})`);
+      });
+    
+    // Rest of the code...
+    
+    
 
     return () => {
       simulation.stop();
@@ -86,7 +96,7 @@ function NetworkGraph(props) {
         <svg ref={svgRef} width={400} height={400}>
             {/* D3 network graph render */}
         </svg>
-        <div>{props.noteId}</div>
+        {/* <div>{props.noteId}</div> */}
     </Container>
   );
 }
