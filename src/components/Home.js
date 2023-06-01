@@ -211,7 +211,7 @@ function Home(props) {
                             <Avatar
                                 sx={{ bgcolor: theme.palette.background.paper }}
                                 alt={loginData.name}
-                                src="/broken-image.jpg"
+                                // src="/broken-image.jpg"
                             />
                             <span style={{ marginLeft: '0.5em' }}>{loginData.email}</span>
                         </div>

@@ -62,7 +62,7 @@ function Note(props) {
                         </p>
                         <p>Информация: {note.note}</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', marginLeft: '20%', marginRight: '20%' }}>
-                          <Button variant="contained" size="large" fullWidth="true" onClick={handleOpenFile}>Открыть файл</Button>
+                          <Button variant="contained" size="large" fullWidth={true} onClick={handleOpenFile}>Открыть файл</Button>
                         </div>
                     </Typography>
                     <NetworkGraph noteId={id} />

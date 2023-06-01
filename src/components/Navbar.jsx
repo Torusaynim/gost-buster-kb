@@ -114,7 +114,6 @@ function DrawerAppBar(props) {
   });
 
   const filterOptions = createFilterOptions({
-    matchFrom: 'start',
     limit: 10,
   });
   
