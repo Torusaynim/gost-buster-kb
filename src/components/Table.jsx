@@ -53,7 +53,7 @@ export default function BasicTable(props) {
                             <TableCell>{row.raised} of {row.requested}</TableCell>
                             <TableCell align="right">
                                 <Button onClick={onNoteSupport} value={row._id} sx={{marginRight: 2}}><MonetizationIcon/>Support</Button>
-                                {props.access || props.currentUser===row.author ? (
+                                {props.access ? (
                                     <>
                                         <Button onClick={onNoteEdit} value={row._id} sx={{marginRight: 2}}><EditIcon/>Edit</Button>
                                         <Button onClick={onNoteDelete} value={row._id} variant="text"><DeleteOutlineIcon/>Delete</Button>

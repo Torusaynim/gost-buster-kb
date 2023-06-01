@@ -57,15 +57,16 @@ function NetworkGraph(props) {
     node
       .append('circle') // Append circle elements within the container group
       .attr('r', (d, i) => (i === 0 ? 30 : 15))
-      .style('fill', 'orange')
-      .style('stroke', 'white')
+      .style('fill', 'orangered')
+      .style('stroke', 'darkgrey')
       .style('stroke-width', 2);
     
     node
       .append('text') // Append text elements within the container group
       .text((d) => d.id) // Set the text content of the node
       .attr('text-anchor', 'middle')
-      .attr('dy', '0.35em'); // Adjust the vertical alignment of the text
+      .attr('dy', '0.35em') // Adjust the vertical alignment of the text
+      .style('fill', 'white');
     
     const simulation = d3
       .forceSimulation(data.nodes)

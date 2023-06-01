@@ -280,7 +280,7 @@ function Home(props) {
                         <Button variant="contained" onClick={handleGetUserNotes}>Мои записи</Button>
                         {NotesList ? (
                             <div>
-                            {hasUserAccess('view_all') &&
+                            {hasUserAccess('modify') &&
                                 <Table data={NotesList} currentUser={loginData.googleId} access={access} onNoteSupport={handleSupportNote} onNoteEdit={handleEditNote} onNoteDelete={handleDelete} />
                             }
                             </div>

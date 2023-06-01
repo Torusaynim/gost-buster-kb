@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import { Paper } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import NetworkGraph from './NetworkGraph';
+import Pdf from './../assets/Test.pdf';
 
 function Note(props) {
     const { id } = useParams();
@@ -33,6 +34,10 @@ function Note(props) {
     
         fetchNote();
     }, [backUri, id]);
+
+    const handleOpenFile = () => {
+      window.open(Pdf, '_blank');
+    };
     
     return (
       <div className="App" style={{ marginTop: '60px' }}>
@@ -57,7 +62,7 @@ function Note(props) {
                         </p>
                         <p>Информация: {note.note}</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', marginLeft: '20%', marginRight: '20%' }}>
-                          <Button variant="contained" size="large" fullWidth="true">Открыть файл</Button>
+                          <Button variant="contained" size="large" fullWidth="true" onClick={handleOpenFile}>Открыть файл</Button>
                         </div>
                     </Typography>
                     <NetworkGraph noteId={id} />
