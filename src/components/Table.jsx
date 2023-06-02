@@ -8,17 +8,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import MonetizationIcon from '@mui/icons-material/MonetizationOn';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function BasicTable(props) {
-
-    const onNoteSupport = (e) => {
-        e.preventDefault()
-        console.log(e.target.value)
-        props.onNoteSupport(e.target.value);
-    }
+    const navigate = useNavigate();
 
     const onNoteEdit = (e) => {
         e.preventDefault()
@@ -33,12 +28,14 @@ export default function BasicTable(props) {
 
     return (
         <TableContainer component={Paper} sx={{ marginTop: 3, maxWidth: 1200, marginX: 'auto' }}>
+            {/* <p>User Access: {props.access.toString()}</p> */}
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Author</TableCell>
-                        <TableCell>Note Name</TableCell>
-                        <TableCell>Progress</TableCell>
+                        <TableCell>Номер</TableCell>
+                        <TableCell>Наименование</TableCell>
+                        <TableCell>Серия</TableCell>
+                        <TableCell>Ключевые слова</TableCell>
                         <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
@@ -46,13 +43,25 @@ export default function BasicTable(props) {
                     {props.data.map((row) => (
                         <TableRow
                             key={row._id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            style={{ cursor: 'pointer' }}
                         >
-                            <TableCell component="th" scope="row">{row.author}</TableCell>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.raised} of {row.requested}</TableCell>
+                            <TableCell onClick={() => navigate(`/note/${row._id}`)}>
+                                {row.number}
+                                {props.access ? (
+                                    <>
+                                    ({row._id})
+                                    </>
+                                ) : (
+                                    <>
+                                    
+                                    </>
+                                )}
+                            </TableCell>
+                            <TableCell onClick={() => navigate(`/note/${row._id}`)}>{row.name}</TableCell>
+                            <TableCell onClick={() => navigate(`/note/${row._id}`)}>{row.group}</TableCell>
+                            <TableCell onClick={() => navigate(`/note/${row._id}`)}>{row.tags.join(', ')}</TableCell>
                             <TableCell align="right">
-                                <Button onClick={onNoteSupport} value={row._id} sx={{marginRight: 2}}><MonetizationIcon/>Support</Button>
                                 {props.access ? (
                                     <>
                                         <Button onClick={onNoteEdit} value={row._id} sx={{marginRight: 2}}><EditIcon/>Edit</Button>

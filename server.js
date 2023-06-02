@@ -1,7 +1,7 @@
 import express from 'express';
 import { OAuth2Client } from 'google-auth-library';
 import mongoSanitize from 'express-mongo-sanitize';
-import { updateUser, newNote, getAllNotes, getNote, getUserNotes, deleteNote, editNote, supportNote, getUserById, getPermissionsByRole, getUserPermissions } from './mongodb.js'
+import { updateUser, newNote, getAllNotes, getNote, deleteNote, editNote, getUserById, getPermissionsByRole, getUserPermissions } from './mongodb.js'
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
@@ -13,7 +13,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 app.post('/api/google-login', async (req, res) => {
     const { token } = req.body;
@@ -34,9 +34,9 @@ app.post('/api/google-login', async (req, res) => {
 });
 
 app.post('/api/new-Note', async (req, res) => {
-    const { user, name, sum } = req.body;
+    const { name, group, number, status, tagsArray, note, linksArray } = req.body;
     console.log(req.body);
-    await newNote(user, name, sum);
+    await newNote(name, group, number, status, tagsArray, note, linksArray);
     res.json('created Note')
 });
 
@@ -57,13 +57,6 @@ app.get('/api/get-Note/:id', async (req, res) => {
       } catch (error) {
         res.status(500).json({ error: 'Failed to retrieve note' });
       }
-    });
-
-app.get('/api/get-user-Notes/:googleId', async (req, res) => {
-    const userNotes = await getUserNotes(req.params.googleId)
-    res.status(200);
-    // console.log(userNotes)
-    res.json(userNotes)
 });
 
 app.post('/api/delete-Note', async (req, res) => {
@@ -77,14 +70,6 @@ app.post('/api/edit-Note', async (req, res) => {
     console.log({ _id, name, sum })
 
     const edit_note = await editNote(_id, name,sum)
-    res.json(edit_note)
-})
-
-app.post('/api/support-Note', async (req, res) => {
-    const { _id, sum } = req.body;
-    console.log({ _id, sum })
-
-    const edit_note = await supportNote(_id, sum)
     res.json(edit_note)
 })
 

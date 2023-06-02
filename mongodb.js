@@ -28,8 +28,8 @@ const updateUser = async (user) => {
     )
 }
 
-const newNote = async (user, name, target) => {
-    await notes.insertOne({ author: user, name: name, raised: 0, requested: parseInt(target) })
+const newNote = async (name, group, number, status, tagsArray, note, linksArray) => {
+    await notes.insertOne({ name: name, group: group, number: number, status: status, tags: tagsArray, note: note, links: linksArray })
 }
 
 const getAllNotes = async () => {
@@ -44,11 +44,6 @@ const getNote = async (_id) => {
     } catch (error) {
         return null;
     }
-}
-
-const getUserNotes = async (userId) => {
-    const res = await notes.find({ author: userId }).toArray()
-    return res
 }
 
 const deleteNote = async (_id) => {
@@ -70,12 +65,6 @@ const editNote = async (_id, anotherName, anotherSum) => {
     }
 }
 
-const supportNote = async (_id, incSum) => {
-    console.log(_id, incSum)
-    const res = await notes.updateOne({ _id: ObjectId(_id) }, { $inc: { "raised": parseInt(incSum) } })
-    console.log(res)
-}
-
 const getUserById = async (id) => {
     return await users.findOne({ googleId: id })
 }
@@ -93,5 +82,5 @@ const getUserPermissions = async (userId) => {
 start()
 
 export {
-    updateUser, newNote, getAllNotes, getNote, getUserNotes, deleteNote, editNote, supportNote, getUserById, getPermissionsByRole, getUserPermissions
+    updateUser, newNote, getAllNotes, getNote, deleteNote, editNote, getUserById, getPermissionsByRole, getUserPermissions
 }

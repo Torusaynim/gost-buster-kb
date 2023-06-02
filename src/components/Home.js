@@ -1,6 +1,8 @@
 import './../App.css';
 import Input from './Input'
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Table from './Table';
 import React, { useState } from 'react';
 import DialogTitle from "@mui/material/DialogTitle";
@@ -19,7 +21,6 @@ function Home(props) {
     const backUri = 'http://127.0.0.1:5000';
     
     const [openEdit, setOpenEdit] = useState(false);
-    const [openSupport, setOpenSupport] = useState(false);
     const [noteId, setNoteId] = useState(null);
     const [text, setText] = useState('Sample name');
     const [sumGET, setSum] = useState(0);
@@ -34,23 +35,9 @@ function Home(props) {
         }
     };
 
-    const handleSupportNote = async (noteId) => {
-        console.log('handleSupportNote')
-        console.log(access)
-        if (noteId) {
-            setOpenSupport(true);
-            setNoteId(noteId);
-        }
-    };
-
     const handleCloseEdit = () => {
         console.log('handleCloseEdit')
         setOpenEdit(false);
-    }
-
-    const handleCloseSupport = () => {
-        console.log('handleCloseSupport')
-        setOpenSupport(false);
     }
 
     const [loginData, setLoginData] = useState(
@@ -114,22 +101,26 @@ function Home(props) {
         // }
     }
 
-    const handleNewNote = async (name,sum) => {
+    const handleNewNote = async (name, group, number, status, tags, links, note) => {
         console.log('handleNewNote')
-    
-        console.log(sum);
+
         await fetch(backUri+'/api/new-Note', {
             method: 'POST',
             body: JSON.stringify({
-                user: loginData.googleId,
                 name: name,
-                sum: sum,
+                group: group,
+                number: number,
+                status: status,
+                tagsArray: tags.split(/[ ,]+/),
+                note: note,
+                linksArray: links.split(/[ ,]+/)
             }),
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-        await handleGetUserNotes(loginData.googleId);
+        
+        await handleGetAllNotes();
     };
   
 
@@ -165,23 +156,6 @@ function Home(props) {
         await handleGetUserNotes(loginData.googleId)
     };
 
-    const handleSupport = async () => {
-     
-        await fetch(backUri+'/api/support-Note', {
-            method: 'POST',
-            body: JSON.stringify({
-                _id: noteId,
-                sum: sumGET
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-
-        setOpenSupport(false)
-        await handleGetUserNotes(loginData.googleId)
-    };
-
     const handleChangeText = (e) => {
 
         setText(e.target.value)
@@ -201,8 +175,9 @@ function Home(props) {
     }
 
     return (
-        <div className="App">
-            <div>
+        <div className="App" style={{ marginTop: '60px' }}>
+          <Container maxWidth="sm">
+            <Box sx={{ p: 2 }}>
                 {loginData ? (
                     <div>
                         <h1>Просмотр записей</h1>
@@ -249,39 +224,27 @@ function Home(props) {
                             </DialogActions>
                         </Dialog>
 
-                        <Dialog open={openSupport} onClose={handleCloseSupport}>
-                            <DialogTitle>Поддержать</DialogTitle>
-                        
-                            <DialogContent>
-                                <form>
+                        {hasUserAccess('modify') &&
+                            access ? (
+                                <Input onNewNote={handleNewNote} />
+                            ) : (
+                                <>
 
-                                <TextField
-                                    onChange={handleChangeSum}
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="Enter amount of support"
-                                    type="number"
-                                    fullWidth
-                                    variant="standard"
-                                    />
-                                </form>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleCloseSupport}>Отмена</Button>
-                                <Button onClick={handleSupport}>Поддержать</Button>
-                            </DialogActions>
-                        </Dialog>
-                        <Input onNewNote={handleNewNote} />
-                        <Button variant="contained" onClick={handleGetAllNotes}>Все записи</Button>
-                        {/* {hasUserAccess('view_all') &&
-                            <Button disabled={!access} variant="outlined" onClick={handleGetAllNotes}>Get all notes</Button>
-                        } */}
-                        <Button variant="contained" onClick={handleGetUserNotes}>Мои записи</Button>
+                                </>
+                            )
+                        }
+
+                        {/* <p>User Access: {hasUserAccess('modify').toString()}</p> */}
+                        
+                        <Box sx={{ p: 2 }}>
+                            <Button variant="contained" onClick={handleGetAllNotes}>Все записи</Button>
+                        </Box>
+                        
+                        
                         {NotesList ? (
                             <div>
                             {hasUserAccess('modify') &&
-                                <Table data={NotesList} currentUser={loginData.googleId} access={access} onNoteSupport={handleSupportNote} onNoteEdit={handleEditNote} onNoteDelete={handleDelete} />
+                                <Table data={NotesList} currentUser={loginData.googleId} access={access} onNoteEdit={handleEditNote} onNoteDelete={handleDelete} />
                             }
                             </div>
                         ) : (
@@ -301,7 +264,8 @@ function Home(props) {
                             />
                     </div>
                 )}
-            </div>
+            </Box>
+          </Container>
         </div>
     );
 
