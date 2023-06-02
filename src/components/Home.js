@@ -22,8 +22,13 @@ function Home(props) {
     
     const [openEdit, setOpenEdit] = useState(false);
     const [noteId, setNoteId] = useState(null);
-    const [text, setText] = useState('Sample name');
-    const [sumGET, setSum] = useState(0);
+    const [name, setName] = useState(null);
+    const [group, setGroup] = useState(null);
+    const [number, setNumber] = useState(null);
+    const [status, setStatus] = useState(null);
+    const [tags, setTags] = useState(null);
+    const [links, setLinks] = useState(null);
+    const [note, setNote] = useState(null);
 
     const [access, setAccess] = useState(false);
 
@@ -91,16 +96,6 @@ function Home(props) {
         // }
     }
 
-    const handleGetUserNotes = async () => {
-        // if (!NotesList) {
-        const res = await fetch(backUri+'/api/get-user-Notes/' + loginData.googleId)
-        const result = await res.json().then(data => { return data })
-        toggleNotes(result)
-        // } else {
-        // toggleNotes(false)
-        // }
-    }
-
     const handleNewNote = async (name, group, number, status, tags, links, note) => {
         console.log('handleNewNote')
 
@@ -135,7 +130,8 @@ function Home(props) {
                 'Content-Type': 'application/json',
             }
         })
-        await handleGetUserNotes(loginData.googleId)
+
+        await handleGetAllNotes();
     };
 
     const handleEdit = async () => {
@@ -144,24 +140,51 @@ function Home(props) {
             method: 'POST',
             body: JSON.stringify({
                 _id: noteId,
-                name: text,
-                sum: sumGET
+                name: name,
+                group: group,
+                number: number,
+                status: status,
+                tags: tags,
+                links: links,
+                note: note
             }),
             headers: {
                 'Content-Type': 'application/json',
             }
         })
 
+        setName(null);
+        setGroup(null);
+        setNumber(null);
+        setStatus(null);
+        setTags(null);
+        setLinks(null);
+        setNote(null);
+
         setOpenEdit(false)
-        await handleGetUserNotes(loginData.googleId)
+        await handleGetAllNotes();
     };
 
-    const handleChangeText = (e) => {
-
-        setText(e.target.value)
+    const handleChangeName = (e) => {
+        setName(e.target.value)
     };
-    const handleChangeSum = (e) => {
-        setSum(e.target.value)
+    const handleChangeGroup = (e) => {
+        setGroup(e.target.value)
+    };
+    const handleChangeNumber = (e) => {
+        setNumber(e.target.value)
+    };
+    const handleChangeStatus = (e) => {
+        setStatus(e.target.value)
+    };
+    const handleChangeTags = (e) => {
+        setTags(e.target.value)
+    };
+    const handleChangeLinks = (e) => {
+        setLinks(e.target.value)
+    };
+    const handleChangeNote = (e) => {
+        setNote(e.target.value)
     };
 
     const hasUserAccess = async (perm) => {
@@ -190,32 +213,82 @@ function Home(props) {
                             />
                             <span style={{ marginLeft: '0.5em' }}>{loginData.email}</span>
                         </div>
-                        <Dialog open={openEdit} onClose={handleCloseEdit}>
+                        <Dialog open={openEdit} onClose={handleCloseEdit} PaperProps={{ style: { maxWidth: '500px' } }}>
                             <DialogTitle>Изменить</DialogTitle>
                         
                             <DialogContent>
                                 <form>
 
                                 <TextField
-                                    onChange={handleChangeText}
+                                    onChange={handleChangeName}
                                     autoFocus
                                     margin="dense"
                                     id="name"
-                                    label="Enter new name"
+                                    label="Новое название"
                                     type="name"
                                     fullWidth
                                     variant="standard"
                                 />
                                 <TextField
-                                    onChange={handleChangeSum}
+                                    onChange={handleChangeGroup}
                                     autoFocus
                                     margin="dense"
-                                    id="name"
-                                    label="Enter new sum"
-                                    type="number"
+                                    id="group"
+                                    label="Новая серия"
+                                    type="name"
                                     fullWidth
                                     variant="standard"
-                                    />
+                                />
+                                <TextField
+                                    onChange={handleChangeNumber}
+                                    autoFocus
+                                    margin="dense"
+                                    id="number"
+                                    label="Новый номер"
+                                    type="name"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                                <TextField
+                                    onChange={handleChangeStatus}
+                                    autoFocus
+                                    margin="dense"
+                                    id="status"
+                                    label="Новый номер"
+                                    type="name"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                                <TextField
+                                    onChange={handleChangeTags}
+                                    autoFocus
+                                    margin="dense"
+                                    id="tags"
+                                    label="Изменить ключевые слова (разделенные запятой)"
+                                    type="name"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                                <TextField
+                                    onChange={handleChangeLinks}
+                                    autoFocus
+                                    margin="dense"
+                                    id="links"
+                                    label="Изменить ссылочные записи (разделенные запятой)"
+                                    type="name"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                                <TextField
+                                    onChange={handleChangeNote}
+                                    autoFocus
+                                    margin="dense"
+                                    id="note"
+                                    label="Изменить пояснение"
+                                    type="name"
+                                    fullWidth
+                                    variant="standard"
+                                />
                                 </form>
                             </DialogContent>
                             <DialogActions>
@@ -237,7 +310,7 @@ function Home(props) {
                         {/* <p>User Access: {hasUserAccess('modify').toString()}</p> */}
                         
                         <Box sx={{ p: 2 }}>
-                            <Button variant="contained" onClick={handleGetAllNotes}>Все записи</Button>
+                            <Button variant="contained" onClick={handleGetAllNotes}>Показать все записи</Button>
                         </Box>
                         
                         
@@ -255,7 +328,7 @@ function Home(props) {
                     </div>
                 ) : (
                     <div>
-                        <h1>Для работы с системой необходима авторизация</h1>
+                        <h1>Для работы с системой необходимо войти в систему</h1>
                             <GoogleLogin
                                 onSuccess={handleLogin}
                                 onError={() => {

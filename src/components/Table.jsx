@@ -22,8 +22,12 @@ export default function BasicTable(props) {
 
     const onNoteDelete = (e) => {
         e.preventDefault()
-        console.log(e.target.value)
-        props.onNoteDelete(e.target.value);
+        const confirmDelete = window.confirm('Вы уверены, что хотите удалить эту запись?');
+        if (confirmDelete) {
+            props.onNoteDelete(e.target.value);
+            console.log(e.target.value)
+        }
+        // props.onNoteDelete(e.target.value);
     }
 
     return (
@@ -64,8 +68,8 @@ export default function BasicTable(props) {
                             <TableCell align="right">
                                 {props.access ? (
                                     <>
-                                        <Button onClick={onNoteEdit} value={row._id} sx={{marginRight: 2}}><EditIcon/>Edit</Button>
-                                        <Button onClick={onNoteDelete} value={row._id} variant="text"><DeleteOutlineIcon/>Delete</Button>
+                                        <Button onClick={onNoteEdit} value={row._id} sx={{marginRight: 2}}><EditIcon/>Изменить</Button>
+                                        <Button onClick={onNoteDelete} value={row._id} variant="text"><DeleteOutlineIcon/>Удалить</Button>
                                     </>
                                 ) : (
                                     <>

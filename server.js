@@ -66,10 +66,10 @@ app.post('/api/delete-Note', async (req, res) => {
 })
 
 app.post('/api/edit-Note', async (req, res) => {
-    const { _id, name, sum } = req.body;
-    console.log({ _id, name, sum })
+    const { _id, name, group, number, status, tags, links, note } = req.body;
+    console.log({ _id, name, group, number, status, tags, links, note })
 
-    const edit_note = await editNote(_id, name,sum)
+    const edit_note = await editNote(_id, name, group, number, status, tags, links, note)
     res.json(edit_note)
 })
 

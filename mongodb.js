@@ -51,18 +51,49 @@ const deleteNote = async (_id) => {
     return res
 }
 
-const editNote = async (_id, anotherName, anotherSum) => {
-    console.log(_id, anotherName, anotherSum)
-    if (anotherName === "Sample name" && anotherSum != "Sample sum") {
-        const res = await notes.updateOne({ _id: ObjectId(_id) }, { $set: { "requested": parseInt(anotherSum) } })
+// _id, name, group, number, status, tags, links, note
+const editNote = async (_id, newName, newGroup, newNumber, newStatus, newTags, newLinks, newNote) => {
+    console.log(_id, newName, newGroup, newNumber, newStatus, newTags, newLinks, newNote)
+    const updateFields = {};
 
+  if (newName !== null && newName !== "") {
+    updateFields.name = newName;
+  }
+
+  if (newGroup !== null && newGroup !== "") {
+    updateFields.group = newGroup;
+  }
+
+  if (newNumber !== null && newNumber !== "") {
+    updateFields.number = newNumber;
+  }
+
+  if (newStatus !== null && newStatus !== "") {
+    updateFields.status = newStatus;
+  }
+
+  if (newTags !== null) {
+    if (newTags !== "") {
+      updateFields.tags = newTags.split(", ");
+    } else {
+      updateFields.tags = [];
     }
-    else if (anotherSum === "Sample sum" && anotherName != "Sample name") {
-        const res = await notes.updateOne({ _id: ObjectId(_id) }, { $set: { "name": anotherName, } })
+  }
+
+  if (newLinks !== null) {
+    if (newLinks !== "") {
+      updateFields.links = newLinks.split(", ");
+    } else {
+      updateFields.links = [];
     }
-    else {
-        const res = await notes.updateOne({ _id: ObjectId(_id) }, { $set: { "name": anotherName, "requested": parseInt(anotherSum) } })
-    }
+  }
+
+  if (newNote !== null && newNote !== "") {
+    updateFields.note = newNote;
+  }
+
+  const res = await notes.updateOne({ _id: ObjectId(_id) }, { $set: updateFields });
+  return res
 }
 
 const getUserById = async (id) => {

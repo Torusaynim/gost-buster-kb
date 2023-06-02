@@ -65,7 +65,7 @@ export default function Inputs(props) {
                 </Typography>
                 }
                 <Typography>
-                    Принимаются только PDF-файлы (макимальный размер 15 МБ)
+                    Поддерживаются только PDF-файлы (максимальный размер 15 МБ)
                 </Typography>
             </div>
             
