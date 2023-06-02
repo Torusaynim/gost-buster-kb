@@ -14,7 +14,8 @@ export default function Inputs(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(event.target.file.value)
+        const file = event.target.file.files[0];
+        // console.log(file)
         props.onNewNote(
             event.target.name.value, 
             event.target.group.value,
@@ -23,6 +24,7 @@ export default function Inputs(props) {
             event.target.tags.value,
             event.target.links.value,
             event.target.note.value,
+            file ? file : null
         );
     }
 

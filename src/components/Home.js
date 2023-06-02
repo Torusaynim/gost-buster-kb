@@ -96,23 +96,32 @@ function Home(props) {
         // }
     }
 
-    const handleNewNote = async (name, group, number, status, tags, links, note) => {
+    const handleNewNote = async (name, group, number, status, tags, links, note, file) => {
         console.log('handleNewNote')
 
-        await fetch(backUri+'/api/new-Note', {
-            method: 'POST',
-            body: JSON.stringify({
-                name: name,
-                group: group,
-                number: number,
-                status: status,
-                tagsArray: tags.split(/[ ,]+/),
-                note: note,
-                linksArray: links.split(/[ ,]+/)
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('group', group);
+        formData.append('number', number);
+        formData.append('status', status);
+
+        const tagsArray = tags.split(', ');
+        tagsArray.forEach((tag) => {
+            formData.append('tagsArray[]', tag);
+        });
+
+        formData.append('note', note);
+
+        const linksArray = links.split(', ');
+        linksArray.forEach((link) => {
+            formData.append('linksArray[]', link);
+        });
+        
+        formData.append('file', file);
+      
+        await fetch(backUri + '/api/new-Note', {
+          method: 'POST',
+          body: formData,
         });
         
         await handleGetAllNotes();
