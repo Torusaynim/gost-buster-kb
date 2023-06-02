@@ -64,7 +64,9 @@ export default function BasicTable(props) {
                             </TableCell>
                             <TableCell onClick={() => navigate(`/note/${row._id}`)}>{row.name}</TableCell>
                             <TableCell onClick={() => navigate(`/note/${row._id}`)}>{row.group}</TableCell>
-                            <TableCell onClick={() => navigate(`/note/${row._id}`)}>{row.tags.join(', ')}</TableCell>
+                            <TableCell onClick={() => navigate(`/note/${row._id}`)}>
+                                {Array.isArray(row.tags) ? row.tags.join(', ') : String(row.tags)}
+                            </TableCell>
                             <TableCell align="right">
                                 {props.access ? (
                                     <>

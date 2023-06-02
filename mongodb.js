@@ -28,8 +28,8 @@ const updateUser = async (user) => {
     )
 }
 
-const newNote = async (name, group, number, status, tagsArray, note, linksArray) => {
-    await notes.insertOne({ name: name, group: group, number: number, status: status, tags: tagsArray, note: note, links: linksArray })
+const newNote = async (name, group, number, status, tagsArray, note, linksArray, path) => {
+    await notes.insertOne({ name: name, group: group, number: number, status: status, tags: tagsArray, note: note, links: linksArray, file: path })
 }
 
 const getAllNotes = async () => {

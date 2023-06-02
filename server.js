@@ -1,9 +1,13 @@
 import express from 'express';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 import { OAuth2Client } from 'google-auth-library';
 import mongoSanitize from 'express-mongo-sanitize';
 import { updateUser, newNote, getAllNotes, getNote, deleteNote, editNote, getUserById, getPermissionsByRole, getUserPermissions } from './mongodb.js'
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+const upload = multer({ dest: 'uploads/' });
 
 const app = express();
 app.use(express.json());
@@ -33,10 +37,24 @@ app.post('/api/google-login', async (req, res) => {
     res.json(user);
 });
 
-app.post('/api/new-Note', async (req, res) => {
+app.post('/api/new-Note', upload.single('file'), async (req, res) => {
     const { name, group, number, status, tagsArray, note, linksArray } = req.body;
+    const file = req.file;
     console.log(req.body);
-    await newNote(name, group, number, status, tagsArray, note, linksArray);
+
+    const timestamp = Date.now();
+
+    if (file) {
+        const ext = path.extname(file.originalname);
+        const fileName = `${timestamp}${ext}`;
+
+        // Rename the file with the timestamp and original extension
+        fs.renameSync(file.path, path.join(file.destination, fileName));
+
+        await newNote(name, group, number, status, tagsArray, note, linksArray, `uploads/${fileName}`);
+    } else {
+        await newNote(name, group, number, status, tagsArray, note, linksArray, null); // Pass null if no file is uploaded
+    }
     res.json('created Note')
 });
 
