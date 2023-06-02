@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import { Paper } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import NetworkGraph from './NetworkGraph';
-import Pdf from './../assets/Test.pdf';
 
 function Note(props) {
     const { id } = useParams();
@@ -36,7 +35,11 @@ function Note(props) {
     }, [backUri, id]);
 
     const handleOpenFile = () => {
-      window.open(Pdf, '_blank');
+      window.open(`${backUri}/${note.file}`, '_blank');
+    };
+
+    const handleClick = () => {
+      setNote(null);
     };
     
     return (
@@ -56,16 +59,16 @@ function Note(props) {
                           Ссылки: {note.links.map((link, index) => (
                             <React.Fragment key={index}>
                               {index > 0 && ", "}
-                              <a component={Link} href={link}>{link}</a>
+                              <Link to={`/note/${link}`} onClick={handleClick}>{link}</Link>
                             </React.Fragment>
                           ))}
                         </p>
                         <p>Информация: {note.note}</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', marginLeft: '20%', marginRight: '20%' }}>
-                          <Button variant="contained" size="large" fullWidth={true} onClick={handleOpenFile}>Открыть файл</Button>
+                          <Button variant="contained" size="large" fullWidth={true} onClick={handleOpenFile} disabled={!note.file}>Открыть файл</Button>
                         </div>
                     </Typography>
-                    <NetworkGraph noteId={id} />
+                    <NetworkGraph noteId={id} noteInfo={note} />
                 </Container>
               ) : (
                 <h1>Загрузка... либо такой записи не существует</h1>

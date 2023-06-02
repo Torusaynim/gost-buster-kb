@@ -95,7 +95,7 @@ export default function Inputs(props) {
                     <Input id='status' placeholder="Статус (Действущий или др.)" inputProps={ariaLabel} required fullWidth />
                 </Grid>
                 <Grid item xs={12}>
-                    <InputButton />
+                    <InputButton required />
                 </Grid>
                 <Grid item xs={12}>
                     <Input id='tags' placeholder="Ключевые слова (разделенные запятыми)" inputProps={ariaLabel} fullWidth />

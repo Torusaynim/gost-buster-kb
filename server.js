@@ -19,6 +19,8 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use('/uploads', express.static('uploads'))
+
 app.post('/api/google-login', async (req, res) => {
     const { token } = req.body;
     const ticket = await client.verifyIdToken({
