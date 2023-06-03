@@ -79,19 +79,19 @@ function DrawerAppBar(props) {
   }));
   
   const searchResults = [
-    { title: 'The Shawshank Redemption', id: "645e8e407098681515417824" },
-    { title: 'The Godfather', id: "645e8e407098681515417824" },
-    { title: 'The Dark Knight', id: "645e8e407098681515417824" },
-    { title: 'American History X', id: "645e8e407098681515417824" },
-    { title: 'Interstellar', id: "645e8e407098681515417824" },
-    { title: 'Casablanca', id: "645e8e407098681515417824" },
-    { title: 'City Lights', id: "645e8e407098681515417824" },
-    { title: 'Psycho', id: "645e8e407098681515417824" },
-    { title: 'The Green Mile', id: "645e8e407098681515417824" },
-    { title: 'The Intouchables', id: "645e8e407098681515417824" },
-    { title: 'Modern Times', id: "645e8e407098681515417824" },
-    { title: 'Raiders of the Lost Ark', id: "645e8e407098681515417824" },
-    { title: 'Rear Window', id: "645e8e407098681515417824" },
+    { name: 'The Shawshank Redemption', group: "1", number: "1", id: "645e8e407098681515417824" },
+    { name: 'The Godfather', group: "1", number: "2", id: "645e8e407098681515417824" },
+    { name: 'The Dark Knight', group: "1", number: "3", id: "645e8e407098681515417824" },
+    { name: 'American History X', group: "1", number: "4", id: "645e8e407098681515417824" },
+    { name: 'Interstellar', group: "2", number: "1", id: "645e8e407098681515417824" },
+    { name: 'Casablanca', group: "2", number: "2", id: "645e8e407098681515417824" },
+    { name: 'City Lights', group: "2", number: "3", id: "645e8e407098681515417824" },
+    { name: 'Psycho', group: "2", number: "4", id: "645e8e407098681515417824" },
+    { name: 'The Green Mile', group: "3", number: "1", id: "645e8e407098681515417824" },
+    { name: 'The Intouchables', group: "3", number: "2", id: "645e8e407098681515417824" },
+    { name: 'Modern Times', group: "3", number: "3", id: "645e8e407098681515417824" },
+    { name: 'Raiders of the Lost Ark', group: "3", number: "4", id: "645e8e407098681515417824" },
+    { name: 'Rear Window', group: "4", number: "1", id: "645e8e407098681515417824" },
     // Replace with parsing notes from DB...
   ];
   
@@ -115,14 +115,17 @@ function DrawerAppBar(props) {
 
   const filterOptions = createFilterOptions({
     limit: 10,
+    matchFrom: 'any',
+    stringify: (option) => option.name + option.group + option.number,
   });
   
   function SearchWithAutocomplete() {
     return (
       <Autocomplete
         freeSolo
-        options={searchResults.map((option) => option.title)}
+        options={searchResults}
         filterOptions={filterOptions}
+        getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <StyledInputBase>
             <TextField
@@ -137,8 +140,8 @@ function DrawerAppBar(props) {
         )}
         renderOption={(props, option) => (
           <li {...props}>
-            <StyledLink to={`/note/${searchResults.find((result) => result.title === option)?.id}`}>
-              {option}
+            <StyledLink to={`/note/${option.id}`}>
+              <span>{option.name}, Серия: {option.group}, Номер: {option.number}</span>
             </StyledLink>
           </li>
         )}

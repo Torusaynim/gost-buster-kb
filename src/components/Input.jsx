@@ -99,7 +99,10 @@ export default function Inputs(props) {
                     <InputButton/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input id='tags' placeholder="Ключевые слова (разделенные запятыми)" inputProps={ariaLabel} required fullWidth />
+                  <Typography>
+                    Необязательные поля:
+                  </Typography>
+                    <Input id='tags' placeholder="Ключевые слова (разделенные запятыми)" inputProps={ariaLabel} fullWidth />
                 </Grid>
                 <Grid item xs={12}>
                     <Input id='links' placeholder="Ссылочные документы (разделенные запятыми)" inputProps={ariaLabel} fullWidth />
