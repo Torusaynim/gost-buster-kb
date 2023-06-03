@@ -28,8 +28,26 @@ const navItems = [
   ];
 
 function DrawerAppBar(props) {
+
+  const backUri = 'http://127.0.0.1:5000';
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [searchResults, setSearchResults] = React.useState([]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch(backUri+'/api/get-all-Notes');
+      const data = await res.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -78,23 +96,6 @@ function DrawerAppBar(props) {
     },
   }));
   
-  const searchResults = [
-    { name: 'The Shawshank Redemption', group: "1", number: "1", id: "645e8e407098681515417824" },
-    { name: 'The Godfather', group: "1", number: "2", id: "645e8e407098681515417824" },
-    { name: 'The Dark Knight', group: "1", number: "3", id: "645e8e407098681515417824" },
-    { name: 'American History X', group: "1", number: "4", id: "645e8e407098681515417824" },
-    { name: 'Interstellar', group: "2", number: "1", id: "645e8e407098681515417824" },
-    { name: 'Casablanca', group: "2", number: "2", id: "645e8e407098681515417824" },
-    { name: 'City Lights', group: "2", number: "3", id: "645e8e407098681515417824" },
-    { name: 'Psycho', group: "2", number: "4", id: "645e8e407098681515417824" },
-    { name: 'The Green Mile', group: "3", number: "1", id: "645e8e407098681515417824" },
-    { name: 'The Intouchables', group: "3", number: "2", id: "645e8e407098681515417824" },
-    { name: 'Modern Times', group: "3", number: "3", id: "645e8e407098681515417824" },
-    { name: 'Raiders of the Lost Ark', group: "3", number: "4", id: "645e8e407098681515417824" },
-    { name: 'Rear Window', group: "4", number: "1", id: "645e8e407098681515417824" },
-    // Replace with parsing notes from DB...
-  ];
-  
   const StyledInputBase = styled('div')(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
@@ -140,7 +141,7 @@ function DrawerAppBar(props) {
         )}
         renderOption={(props, option) => (
           <li {...props}>
-            <StyledLink to={`/note/${option.id}`}>
+            <StyledLink to={`/note/${option._id}`}>
               <span>{option.name}, Серия: {option.group}, Номер: {option.number}</span>
             </StyledLink>
           </li>
@@ -179,10 +180,12 @@ function DrawerAppBar(props) {
             <SearchWithAutocomplete />
           </Search>
           <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
-            {navItems.map((item) => (
-              <Button component={Link} to={item.link} key={item.label} sx={{ color: '#fff', textAlign: 'center' }}>
-                {item.label}
-              </Button>
+            {navItems.map((item, index) => (
+              <ListItem key={index} disablePadding>
+                <Button component={Link} to={item.link} key={item.label} sx={{ color: '#fff', textAlign: 'center' }}>
+                  {item.label}
+                </Button>
+              </ListItem>
             ))}
             <Button variant="contained" onClick={props.toggleTheme} >Сменить тему</Button>
           </Box>
