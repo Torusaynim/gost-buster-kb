@@ -57,7 +57,8 @@ export default function Inputs(props) {
               ref={fileInput} 
               type="file" 
               style={{ display: 'none' }}
-              onChange={handleFileChange} 
+              onChange={handleFileChange}
+              required 
             />
 
             <div>
@@ -95,10 +96,10 @@ export default function Inputs(props) {
                     <Input id='status' placeholder="Статус (Действущий или др.)" inputProps={ariaLabel} required fullWidth />
                 </Grid>
                 <Grid item xs={12}>
-                    <InputButton required />
+                    <InputButton/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input id='tags' placeholder="Ключевые слова (разделенные запятыми)" inputProps={ariaLabel} fullWidth />
+                    <Input id='tags' placeholder="Ключевые слова (разделенные запятыми)" inputProps={ariaLabel} required fullWidth />
                 </Grid>
                 <Grid item xs={12}>
                     <Input id='links' placeholder="Ссылочные документы (разделенные запятыми)" inputProps={ariaLabel} fullWidth />

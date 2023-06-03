@@ -71,7 +71,7 @@ function Note(props) {
                     <NetworkGraph noteId={id} noteInfo={note} />
                 </Container>
               ) : (
-                <h1>Загрузка... либо такой записи не существует</h1>
+                <h1>Возможно, такой записи не существует</h1>
               )}
             </Paper>
           </Box>
