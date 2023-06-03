@@ -180,12 +180,10 @@ function DrawerAppBar(props) {
             <SearchWithAutocomplete />
           </Search>
           <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center' }}>
-            {navItems.map((item, index) => (
-              <ListItem key={index} disablePadding>
-                <Button component={Link} to={item.link} key={item.label} sx={{ color: '#fff', textAlign: 'center' }}>
-                  {item.label}
-                </Button>
-              </ListItem>
+            {navItems.map((item) => (
+              <Button component={Link} to={item.link} key={item.label} sx={{ color: '#fff', textAlign: 'center' }}>
+                {item.label}
+              </Button>
             ))}
             <Button variant="contained" onClick={props.toggleTheme} >Сменить тему</Button>
           </Box>
