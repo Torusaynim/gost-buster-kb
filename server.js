@@ -7,7 +7,20 @@ import mongoSanitize from 'express-mongo-sanitize';
 import { updateUser, newNote, getAllNotes, getNote, deleteNote, editNote, getUserById, getPermissionsByRole, getUserPermissions } from './mongodb.js'
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({
+    dest: 'uploads/',
+    fileFilter: (req, file, cb) => {
+      // Check if the file type is PDF
+      if (file.mimetype !== 'application/pdf') {
+        cb(new Error('Only PDF files are allowed'));
+      } else {
+        cb(null, true);
+      }
+    },
+    limits: {
+      fileSize: 15 * 1024 * 1024, // 15 MB
+    },
+});
 
 const app = express();
 app.use(express.json());
@@ -20,6 +33,21 @@ app.use(function(req, res, next) {
 });
 
 app.use('/uploads', express.static('uploads'))
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    if (err instanceof multer.MulterError) {
+      // Multer error
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        res.status(400).json({ error: 'File size exceeds the limit' });
+      } else {
+        res.status(400).json({ error: err.message });
+      }
+    } else {
+      // Other errors
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 app.post('/api/google-login', async (req, res) => {
     const { token } = req.body;

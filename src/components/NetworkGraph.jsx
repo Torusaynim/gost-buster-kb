@@ -123,7 +123,7 @@ function NetworkGraph(props) {
       .attr('text-anchor', 'middle')
       .attr('dy', '0.35em') // Adjust the vertical alignment of the text
       .style('fill', (d) => {
-        if (d.status === 'active') return 'white';
+        if (d.status === 'active') return 'black';
         if (d.status === 'inactive') return 'black';
         if (d.status === 'error') return 'white';
         return 'white'; // Set a default text color
