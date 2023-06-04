@@ -19,6 +19,11 @@ function NetworkGraph(props) {
         const data = await response.json();
         const linkedNoteIds = data.links;
 
+        if (linkedNoteIds.length === 0 || (linkedNoteIds.length === 1 && linkedNoteIds[0] === '')) {
+          setLinkedNotes([]);
+          return;
+        }
+
         const linkedNotesData = await Promise.all(
           linkedNoteIds.map(async (id) => {
             const res = await fetch(`${backUri}/api/get-Note/${id}`);
@@ -37,9 +42,9 @@ function NetworkGraph(props) {
   }, [props.noteData]);
 
   useEffect(() => {
-    if (linkedNotes.length === 0) {
-      return; // Skip rendering if there are no linked notes
-    }
+    // if (linkedNotes.length === 0) {
+    //   return; // Skip rendering if there are no linked notes
+    // }
 
     const svg = d3.select(svgRef.current);
 
