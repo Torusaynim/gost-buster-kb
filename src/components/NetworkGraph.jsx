@@ -42,14 +42,21 @@ function NetworkGraph(props) {
 
     const data = {
       nodes: [
-        { id: 'Образец записи' },
-        { id: 'Пример связи 1' },
-        { id: 'Пример связи 2' },
+        {
+          id: props.noteData._id,
+          name: props.noteData.name,
+          status: props.noteData.status === 'Действующий' ? 'active' : 'inactive',
+        },
+        ...linkedNotes.map((note) => ({
+          id: note._id,
+          name: note.name,
+          status: note.error ? 'error' : note.status === 'Действующий' ? 'active' : 'inactive',
+        })),
       ],
-      links: [
-        { source: 'Образец записи', target: 'Пример связи 1' },
-        { source: 'Образец записи', target: 'Пример связи 2' },
-      ],
+      links: linkedNotes.map((note) => ({
+        source: props.noteData._id,
+        target: note._id,
+      })),
     };
 
     const drag = d3
@@ -70,36 +77,46 @@ function NetworkGraph(props) {
       });
 
     const link = svg
-    .selectAll('.link')
-    .data(data.links)
-    .enter()
-    .append('line')
-    .attr('class', 'link')
-    .style('stroke', 'gray')
-    .style('stroke-width', 2);
+      .selectAll('.link')
+      .data(data.links)
+      .enter()
+      .append('line')
+      .attr('class', 'link')
+      .style('stroke', 'gray')
+      .style('stroke-width', 2);
 
     const node = svg
-    .selectAll('.node')
-    .data(data.nodes)
-    .enter()
-    .append('g') // Append a container group for each node
-    .attr('class', 'node')
-    .call(drag);
-    
+      .selectAll('.node')
+      .data(data.nodes)
+      .enter()
+      .append('g') // Append a container group for each node
+      .attr('class', 'node')
+      .call(drag);
+
     node
       .append('circle') // Append circle elements within the container group
       .attr('r', (d, i) => (i === 0 ? 30 : 15))
-      .style('fill', 'orangered')
+      .style('fill', (d) => {
+        if (d.status === 'active') return 'green';
+        if (d.status === 'inactive') return 'yellow';
+        if (d.status === 'error') return 'purple';
+        return 'orangered';
+      })
       .style('stroke', 'darkgrey')
       .style('stroke-width', 2);
-    
+
     node
       .append('text') // Append text elements within the container group
-      .text((d) => d.id) // Set the text content of the node
+      .text((d) => d.name) // Set the text content of the node
       .attr('text-anchor', 'middle')
       .attr('dy', '0.35em') // Adjust the vertical alignment of the text
-      .style('fill', 'white');
-    
+      .style('fill', (d) => {
+        if (d.status === 'active') return 'white';
+        if (d.status === 'inactive') return 'black';
+        if (d.status === 'error') return 'white';
+        return 'white'; // Set a default text color
+      });
+
     const simulation = d3
       .forceSimulation(data.nodes)
       .force('link', d3.forceLink(data.links).id((d) => d.id).distance(100))
@@ -111,13 +128,9 @@ function NetworkGraph(props) {
           .attr('y1', (d) => d.source.y)
           .attr('x2', (d) => d.target.x)
           .attr('y2', (d) => d.target.y);
-    
+
         node.attr('transform', (d) => `translate(${d.x}, ${d.y})`);
       });
-    
-    // Rest of the code...
-    
-    
 
     return () => {
       // Clean up the D3 simulation and remove SVG elements
@@ -125,7 +138,9 @@ function NetworkGraph(props) {
       svg.selectAll('.link').remove();
       svg.selectAll('.node').remove();
     };
-  }, [linkedNotes]);
+  }, [linkedNotes, props.noteData]);
+
+  console.log(linkedNotes);
 
   return (
     <Container component="span" sx={{ p: 2, border: '1px dashed grey' }}>
