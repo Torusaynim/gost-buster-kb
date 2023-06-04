@@ -1,11 +1,43 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import * as d3 from 'd3';
 
 function NetworkGraph(props) {
+
+  const backUri = 'http://127.0.0.1:5000';
+
   const svgRef = useRef(null);
+  const [linkedNotes, setLinkedNotes] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${backUri}/api/get-Note/${props.noteData._id}`);
+        const data = await response.json();
+        const linkedNoteIds = data.links;
+
+        const linkedNotesData = await Promise.all(
+          linkedNoteIds.map(async (id) => {
+            const res = await fetch(`${backUri}/api/get-Note/${id}`);
+            const result = await res.json();
+            return result;
+          })
+        );
+
+        setLinkedNotes(linkedNotesData);
+      } catch (error) {
+        console.error('Error fetching linked notes:', error);
+      }
+    };
+
+    fetchData();
+  }, [props.noteData]);
+
+  useEffect(() => {
+    if (linkedNotes.length === 0) {
+      return; // Skip rendering if there are no linked notes
+    }
+
     const svg = d3.select(svgRef.current);
 
     const data = {
@@ -88,16 +120,25 @@ function NetworkGraph(props) {
     
 
     return () => {
+      // Clean up the D3 simulation and remove SVG elements
       simulation.stop();
+      svg.selectAll('.link').remove();
+      svg.selectAll('.node').remove();
     };
-  }, []);
+  }, [linkedNotes]);
 
   return (
     <Container component="span" sx={{ p: 2, border: '1px dashed grey' }}>
         <svg ref={svgRef} width={400} height={400}>
             {/* D3 network graph render */}
         </svg>
-        {/* <div>{props.noteId}</div> */}
+        {/* Render the linked notes */}
+        {linkedNotes.map((note) => (
+          <div key={note._id}>
+            <span>{note.name} </span>
+            <span>{note.status}</span>
+          </div>
+        ))}
     </Container>
   );
 }
