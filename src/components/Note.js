@@ -68,7 +68,7 @@ function Note(props) {
                           <Button variant="contained" size="large" fullWidth={true} onClick={handleOpenFile} disabled={!note.file}>Открыть файл</Button>
                         </div>
                     </Typography>
-                    <NetworkGraph noteData={note} />
+                    <NetworkGraph noteData={note} setNote={setNote}/>
                 </Container>
               ) : (
                 <h1>Возможно, такой записи не существует</h1>

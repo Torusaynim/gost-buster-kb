@@ -101,6 +101,10 @@ function NetworkGraph(props) {
       .attr('class', 'node')
       .call(drag)
       .on('click', (event, d) => {
+        console.log(d.id);
+        if (typeof d.id === 'undefined') {
+          props.setNote(null);
+        }
         navigate(`/note/${d.id}`);
       })
       .on('mouseover', (event, d) => {
