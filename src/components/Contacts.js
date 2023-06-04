@@ -21,7 +21,7 @@ function Contacts(props) {
                 <Grid item xs={12} sm={4}>
                   <Box spacing={3}>
                     <Typography variant="body1" mb={3} align="justify">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                    Не следует, однако забывать, что дальнейшее развитие различных форм деятельности играет важную роль в формировании новых предложений. Равным образом рамки и место обучения кадров позволяет оценить значение дальнейших направлений развития. Повседневная практика показывает, что сложившаяся структура организации требуют от нас анализа дальнейших направлений развития. Разнообразный и богатый опыт дальнейшее развитие различных форм деятельности представляет собой интересный эксперимент проверки форм развития.
                     </Typography>
                     <Typography component={'span'} variant="body1" mb={3} align="justify">
                       <Box display="flex" mb={1} alignItems="center">
