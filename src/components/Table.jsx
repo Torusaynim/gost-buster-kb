@@ -12,6 +12,9 @@ import Button from '@mui/material/Button';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import { green, yellow } from '@mui/material/colors';
+
 
 export default function BasicTable(props) {
   const navigate = useNavigate();
@@ -76,19 +79,22 @@ export default function BasicTable(props) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell>
+              {/* Status Column */}
+            </TableCell>
             <TableCell onClick={() => sortTable('number')}>
-                Номер {renderSortIcon('number')}
+              <div style={{ display: 'flex', alignItems: 'center' }}>Номер {renderSortIcon('number')}</div>
             </TableCell>
             <TableCell sx={{ verticalAlign: 'middle' }} onClick={() => sortTable('name')}>
-                Наименование {renderSortIcon('name')}
+              <div style={{ display: 'flex', alignItems: 'center' }}>Наименование {renderSortIcon('name')}</div>
             </TableCell>
             <TableCell sx={{ verticalAlign: 'middle' }} onClick={() => sortTable('group')}>
-                Серия {renderSortIcon('group')}
+              <div style={{ display: 'flex', alignItems: 'center' }}>Серия {renderSortIcon('group')}</div>
             </TableCell>
             <TableCell sx={{ verticalAlign: 'middle' }}>
-                Ключевые слова
+              Ключевые слова
             </TableCell>
-            <TableCell/>
+            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
@@ -97,6 +103,16 @@ export default function BasicTable(props) {
               key={row._id}
               style={{ cursor: 'pointer' }}
             >
+              <TableCell style={{ maxWidth: 10 }} onClick={() => navigate(`/note/${row._id}`)}>
+                <Box
+                  sx={{
+                    backgroundColor: row.status === 'Действующий' ? green[500] : yellow[500],
+                    width: 20,
+                    height: 20,
+                    borderRadius: '50%',
+                  }}
+                />
+              </TableCell>
               <TableCell onClick={() => navigate(`/note/${row._id}`)}>
                 {row.number}
                 {props.access ? `(${row._id})` : ''}
