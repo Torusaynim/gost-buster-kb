@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Container from '@mui/material/Container';
 import * as d3 from 'd3';
+import { useNavigate } from 'react-router-dom';
 
 function NetworkGraph(props) {
 
   const backUri = 'http://127.0.0.1:5000';
+  const navigate = useNavigate();
 
   const svgRef = useRef(null);
   const [linkedNotes, setLinkedNotes] = useState([]);
+  const [hoveredNode, setHoveredNode] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,7 +94,16 @@ function NetworkGraph(props) {
       .enter()
       .append('g') // Append a container group for each node
       .attr('class', 'node')
-      .call(drag);
+      .call(drag)
+      .on('click', (event, d) => {
+        navigate(`/note/${d.id}`);
+      })
+      .on('mouseover', (event, d) => {
+        setHoveredNode(d);
+      })
+      .on('mouseout', () => {
+        setHoveredNode(null);
+      });
 
     node
       .append('circle') // Append circle elements within the container group
@@ -140,20 +152,26 @@ function NetworkGraph(props) {
     };
   }, [linkedNotes, props.noteData]);
 
-  console.log(linkedNotes);
 
   return (
     <Container component="span" sx={{ p: 2, border: '1px dashed grey' }}>
         <svg ref={svgRef} width={400} height={400}>
             {/* D3 network graph render */}
         </svg>
-        {/* Render the linked notes */}
-        {linkedNotes.map((note) => (
-          <div key={note._id}>
-            <span>{note.name} </span>
-            <span>{note.status}</span>
+        {hoveredNode && (
+          <div
+            style={{
+              position: 'fixed',
+              bottom: '10px',
+              left: '10px',
+              padding: '5px',
+              background: 'rgba(0, 0, 0, 0.8)',
+              color: 'white',
+            }}
+          >
+            Path: /note/{hoveredNode.id}
           </div>
-        ))}
+        )}
     </Container>
   );
 }
