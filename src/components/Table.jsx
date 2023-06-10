@@ -122,7 +122,7 @@ export default function BasicTable(props) {
               <TableCell onClick={() => navigate(`/note/${row._id}`)}>
                 {Array.isArray(row.tags) ? row.tags.join(', ') : String(row.tags)}
               </TableCell>
-              <TableCell align="right">
+              <TableCell>
                 {props.access && (
                   <>
                     <Button onClick={onNoteEdit} value={row._id} sx={{ marginRight: 2 }}>

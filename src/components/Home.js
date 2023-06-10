@@ -263,7 +263,7 @@ function Home(props) {
                                     autoFocus
                                     margin="dense"
                                     id="status"
-                                    label="Новый номер"
+                                    label="Новый статус"
                                     type="name"
                                     fullWidth
                                     variant="standard"

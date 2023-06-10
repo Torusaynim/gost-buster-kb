@@ -142,7 +142,7 @@ function NetworkGraph(props) {
       .forceSimulation(data.nodes)
       .force('link', d3.forceLink(data.links).id((d) => d.id).distance(100))
       .force('charge', d3.forceManyBody().strength(-1000))
-      .force('center', d3.forceCenter(200, 200).strength(0.05))
+      .force('center', d3.forceCenter(svgRef.current.clientWidth / 2, 200).strength(0.05))
       .on('tick', () => {
         link
           .attr('x1', (d) => d.source.x)
@@ -164,7 +164,7 @@ function NetworkGraph(props) {
 
   return (
     <Container component="span" sx={{ p: 2, border: '1px dashed grey' }}>
-        <svg ref={svgRef} width={400} height={400}>
+        <svg ref={svgRef} width="100%" height={400}>
             {/* D3 network graph render */}
         </svg>
         {hoveredNode && (
